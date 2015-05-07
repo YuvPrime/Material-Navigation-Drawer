@@ -1,15 +1,20 @@
 package com.materialnavigationdrawer;
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    Toolbar app_bar;
+    public Toolbar app_bar;
+    NavigationDrawerFragment navigationDrawerFragment;
+
+   CharSequence title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +24,17 @@ public class MainActivity extends AppCompatActivity {
         app_bar = (Toolbar)findViewById(R.id.app_bar);
         setSupportActionBar(app_bar);
 
+        title = getTitle();
 
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
+
+
+
+        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+
+        navigationDrawerFragment.setUp(this, R.id.fragment_navigation_drawer,(DrawerLayout)findViewById(R.id.navigation_drawer),app_bar);
 
     }
 
@@ -28,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position, CharSequence item_clicked) {
+        // update the main content by replacing fragments
+
+        Toast.makeText(this,position + "clicked",Toast.LENGTH_LONG).show();
+
+
+
     }
 
     @Override
